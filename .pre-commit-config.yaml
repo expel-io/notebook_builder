@@ -1,0 +1,51 @@
+
+exclude: 'sample_data/.*'
+repos:
+- repo: git://github.com/pre-commit/pre-commit-hooks
+  rev: v2.2.3
+  hooks:
+    - id: check-added-large-files
+      language_version: python3
+    - id: check-ast
+      language_version: python3
+    - id: check-case-conflict
+      language_version: python3
+    - id: check-docstring-first
+      language_version: python3
+    - id: check-merge-conflict
+      language_version: python3
+    - id: check-xml
+      language_version: python3
+    - id: check-yaml
+      language_version: python3
+    - id: debug-statements
+      language_version: python3
+    - id: detect-private-key
+      language_version: python3
+    - id: end-of-file-fixer
+      language_version: python3
+    - id: requirements-txt-fixer
+      language_version: python3
+    - id: trailing-whitespace
+      language_version: python3
+- repo: git://github.com/asottile/reorder_python_imports
+  rev: v1.4.0
+  hooks:
+    - id: reorder-python-imports
+      language_version: python3
+      exclude: '(versioneer|_version).py'
+- repo: https://github.com/Lucas-C/pre-commit-hooks-bandit
+  rev: v1.0.4
+  try_except_pass:
+    check_typed_exception: True
+  hooks:
+    - id: python-bandit-vulnerability-check
+      language_version: python3
+      args: [--ini, .banditrc, --recursive, hunt_tools]
+      files: .py$
+- repo: https://github.com/pre-commit/mirrors-autopep8
+  rev: v1.4.4
+  hooks:
+    - id: autopep8
+      language_version: python3
+      args: ['-i', '--max-line-length=120']

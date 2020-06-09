@@ -1,0 +1,65 @@
+# The notebook name is both the file name and the unique identifier for the hunt
+notebook_name: legit_svc_c2
+# The full name is used to reference the specific hunting technique
+technique_name: Legitimate Services for Command-and-Control
+
+# These are the fields that will need to be in every hunt to avoid key errors
+column_list: ['record_id', 'proc_first_seen', 'proc_last_seen', 'conn_first_seen', 'conn_last_seen', 'host', 'user', 'process_name', 'process_args', 'parent_name', 'domain', 'dest_ip', 'dest_port', 'netconns']
+
+# What is this hunt technique, what is it looking for? Reference the Threat Hunting Library.
+hunt_description: |
+  ## Hunt Description
+  Attackers need to be able to send commands and receive data from their implants to act on objectives. With URL categorization, IP reputation services, and other network security products, it can prove challenging to maintain command-and-control (C2) infrastructure that goes undetected for long. To avoid suspicion and stay in a victim environment, attackers will often use legitimate web services like Google Docs or Microsoft Answers as C2 channels to blend in with corporate traffic. With this hunting method, Expel evaluates web traffic to legitimate web services that are occurring at a regular interval across non-standard processes to identify suspicious activity that may have avoided vendor product detection.
+
+# This is the technical description of the hunt and what type of data is involved. Reference the Threat Hunting Library.
+technique_details: |
+  ### Technique Details
+  On the Endpoint side of the technique, use process event history to query for legit web service connections. Return the subset of processes and look for processes that have more than 10 connections in a 30 day time window that are not standard web browsing processes.
+
+# How should an analyst review the data? What should the analyst be looking out for in general, ie Observables.
+# If we were to identify an incident, what would be some commone containment or remediation actions?
+triage_tips: |
+  ## General Triage Notes
+
+  **Observables:**
+  Look out for connection frequencies.
+   - It is hard to triage connections that are connecting to benign domains, here is where abnormal connection frequencies help.
+
+  Look for abnormal domains.
+   - Although we are focusing on C2 activities to legit application domains, there may be suspicious endpoints that are not legit.
+
+  Look for abnormal user activity.
+   - If there are frequent connections to a domain, check off some boxes by searching for context on whether the user is intentionally making frequent connections.
+
+downselects:
+- title: Quick Search Spread Counts Report
+  desc: |
+    ### **Overview**
+    Spread count is important for this particular hunt because this hunt aligns with attack theory.
+    First off, if an attacker gets access into an environment, they will want to establish persistence quickly. However, they won't want all of their persistence on one host! What if that system goes offline or its discovered? Even attackers don't like to put all of their eggs in one basket! The attacker will want persistence on multiple hosts to ensure they can get back into the environment as long as they need to carry out their attack.
+    Second, generally speaking, an attacker is not going to be lucky enough to compromise the `crown jewels` on their first compromise into the environment. Therefore, the attacker will need to move laterally in the environment, often compromising a few hosts until they find a host with `Domain Creds` and can finally move to the `crown jewels`.
+    Spread count helps us identify:
+    * What process hashes are being renamed and/or executed across multiple hosts.
+    * What user accounts are executing multiple processes or processes on multiple hosts.
+    * What processes are being executed by multiple user accounts or across multiple hosts.
+    * What hosts have multiple suspicious processes run from one or multiple user accounts.
+    ### **Report Table**
+    Use the table below to display a spread counts report for items that match your search criteria. You can quick search on **Process Name**, **Process Args**, **Process Hash**, **Sensor ID**, or **User**.
+  obsv:
+  ref:
+  func: d.spread_counts_report(['user', 'host', 'process_name', 'process_args'], ['record_id', 'user', 'process_name', 'process_args', 'host'])
+- title: Unique Domains
+  desc: This table will provide a listing of unique domains and prevalence in the hunt.
+  obsv:
+  ref:
+  func: d.column_frequency_count('domain')
+- title: Network Connection Frequency
+  desc: This table will provide the count of network connections outbound to a domain and destination address pair.
+  obsv:
+  ref:
+  func: d.column_group(['dest_ip', 'domain', 'netconns'], 'netconns')
+- title: Process Arguments
+  desc: This table will list out all unique process arguments for each unique domain.
+  obsv:
+  ref:
+  func: d.general_frequency_trend(['domain', 'process_args'], 'record_id')

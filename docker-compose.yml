@@ -1,0 +1,25 @@
+---
+version: '2'
+
+services:
+  build_hunts:
+    environment:
+      - LOGLEVEL=debug
+      - DEVELOPMENT_MODE=True
+    build: .
+    volumes:
+      - .:/app
+    command: "/opt/conda/bin/python /app/notebook_builder.py"
+
+  notebook:
+    environment:
+      - LOGLEVEL=debug
+      - DEVELOPMENT_MODE=True
+    build: .
+    volumes:
+      - .:/opt/notebooks # Map our current directory to /opt/notebooks so we can persist work..
+    depends_on:
+      - "build_hunts"
+    command: "/opt/conda/bin/jupyter notebook --notebook-dir=/opt/notebooks --ip 0.0.0.0 --port 8889 --allow-root --no-browser"
+    ports:
+      - 8889:8889
