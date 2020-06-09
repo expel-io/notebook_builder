@@ -2,7 +2,7 @@
 
 An example of scaling the use of Jupyter Notebooks with nbformat and YAML configuration files.
 
-This is the example source code for Expel's blog post on Jupyter Notebooks at Scale: [blog link here]
+Below is the example source code for Expel’s blog post, “How to create and maintain Jupyter threat hunting notebooks.” You can find the blog here: [Link to blog post]
 
 ## Instructions
 
