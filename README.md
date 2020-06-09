@@ -11,7 +11,7 @@ Follow the steps below to see the example in use.
 1. Clone this repo and change into the repo directory:
 
 ```
-$ git clone git@github.com:andrewpritchett/notebook_builder.git
+$ git clone git@github.com:expel-io/notebook_builder.git
 ```
 ```
 $ cd notebook_builder
