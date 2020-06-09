@@ -1,7 +1,7 @@
 # How to create and maintain Jupyter threat hunting notebooks - Example Source Code
 
 <p align="center">
-  <img width="450" height="150" src="https://github.com/expel-io/notebook_builder/blob/master/images/expel.png">
+  <img width="300" height="100" src="https://github.com/expel-io/notebook_builder/blob/master/images/expel.png">
 </p>
 
 An example of scaling the use of Jupyter Notebooks with nbformat and YAML configuration files.
