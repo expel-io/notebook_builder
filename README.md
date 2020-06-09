@@ -1,4 +1,6 @@
-# Jupyter Notebooks at Scale Example Source Code
+# How to create and maintain Jupyter threat hunting notebooks - Example Source Code
+
+![expel](./images/expel.png)
 
 An example of scaling the use of Jupyter Notebooks with nbformat and YAML configuration files.
 
