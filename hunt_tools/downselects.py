@@ -17,7 +17,8 @@ from ipywidgets import Layout
 
 
 def downselect(f):
-    """This is a decorator run before the function and will catch any errors and can be configured to report to Sentry, Loggly and/or DataDog."""
+    """This is a decorator run before the function and will catch any errors and can be configured to log and/or
+    report to an error reporting tool like Sentry."""
 
     @functools.wraps(f)
     def wrap(self, *args, **kwargs):
