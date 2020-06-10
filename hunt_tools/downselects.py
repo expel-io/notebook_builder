@@ -1,6 +1,6 @@
 import functools
-import re
 import os
+import re
 
 import ipywidgets as widgets
 import numpy as np
@@ -57,7 +57,6 @@ class Downselects:
     def __init__(self, hunt_data_df):
         self.df = hunt_data_df
 
-
     def get_df(self, df=None):
         """Returns the hunt_data dataframe otherwise a passed in dataframe."""
 
@@ -65,7 +64,6 @@ class Downselects:
             return df
         else:
             return self.df.copy()
-
 
     @downselect
     def general_frequency_trend(self, groupby, uniqued, df=None):
@@ -77,7 +75,7 @@ class Downselects:
             df (dataframe): passed in dataframe to run this downselect on
 
         Returns:
-            Displays the dataframe as QGrid
+            Returns the dataframe object
         """
 
         df = self.get_df(df=df)
@@ -85,7 +83,6 @@ class Downselects:
             return None
 
         return df.groupby(groupby).nunique()[[uniqued]].rename(columns={uniqued: 'count'})
-
 
     @downselect
     def column_frequency_count(self, column, df=None):
@@ -96,7 +93,7 @@ class Downselects:
             df (dataframe): passed in dataframe to run this downselect on
 
         Returns:
-            Displays the dataframe as QGrid
+            Returns the dataframe object
         """
 
         df = self.get_df(df=df)
@@ -105,7 +102,6 @@ class Downselects:
 
         tmpdf = df.groupby([column]).size().reset_index(name='count')
         return tmpdf.sort_values(by=['count'], ascending=False).reset_index(drop=True)
-
 
     @downselect
     def column_group(self, column_list, sort_by, df=None):
@@ -117,7 +113,7 @@ class Downselects:
             df (dataframe): passed in dataframe to run this downselect on
 
         Returns:
-            Displays the dataframe as QGrid
+            Returns the dataframe object
         """
 
         df = self.get_df(df=df)
@@ -126,7 +122,6 @@ class Downselects:
 
         tmpdf = df[column_list].drop_duplicates()
         return tmpdf.sort_values(by=[sort_by], ascending=False).reset_index(drop=True)
-
 
     @downselect
     def spread_counts_report(self, search_list, field_list, df=None):
@@ -220,7 +215,7 @@ class Downselects:
             column_list (list): columns to display in dataframe
             df (dataframe): passed in dataframe to run this downselect on
         Returns:
-            Displays a dataframe as QGrid
+            Returns the dataframe object
         """
 
         df = self.get_df(df=df)
@@ -229,7 +224,6 @@ class Downselects:
 
         return df[(df['parent_name'] == 'java.exe') | (df['parent_name'] == 'javaw.exe')][column_list]
 
-
     @downselect
     def office_exploit(self, column_list, df=None):
         """Returns any data where Microsoft Office products are the parent process
@@ -237,7 +231,7 @@ class Downselects:
             column_list (list): columns to display in dataframe
             df (dataframe): passed in dataframe to run this downselect on
         Returns:
-            Displays a dataframe as QGrid
+            Returns the dataframe object
         """
 
         df = self.get_df(df=df)
@@ -245,8 +239,7 @@ class Downselects:
             return None
 
         return df[(df['parent_name'] == 'winword.exe') | (df['parent_name'] == 'excel.exe')
-                       | (df['parent_name'] == 'powerpnt.exe')][column_list]
-
+                  | (df['parent_name'] == 'powerpnt.exe')][column_list]
 
     @downselect
     def adobe_exploit(self, column_list, df=None):
@@ -255,7 +248,7 @@ class Downselects:
             column_list (list): columns to display in dataframe
             df (dataframe): passed in dataframe to run this downselect on
         Returns:
-            Displays a dataframe as QGrid
+            Returns the dataframe object
         """
 
         df = self.get_df(df=df)
@@ -265,7 +258,6 @@ class Downselects:
         return df[(df['parent_name'] == 'acrobat.exe') | (
             df['parent_name'] == 'acrord32.exe')][column_list]
 
-
     @downselect
     def web_shell_exploit(self, column_list, df=None):
         """Returns any data where web applications are the parent process
@@ -273,7 +265,7 @@ class Downselects:
             column_list (list): columns to display in dataframe
             df (dataframe): passed in dataframe to run this downselect on
         Returns:
-            Displays a dataframe as QGrid
+            Returns the dataframe object
         """
 
         df = self.get_df(df=df)

@@ -4,9 +4,9 @@ import sys
 from datetime import datetime
 from unittest.mock import MagicMock
 
+import mock
 import pandas as pd
 import pytest
-import mock
 
 current_dir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
 parent_dir = os.path.dirname(current_dir)
@@ -102,7 +102,7 @@ class TestDownselects():
 
     def test_column_group(self, monkeypatch, downselects):
         '''
-        Test that our general_frequency_trend method returns the correct data
+        Test that our column_group method returns the correct data
         '''
         monkeypatch.setenv('TESTING', '')
 
@@ -116,7 +116,7 @@ class TestDownselects():
 
     def test_java_exploit(self, monkeypatch, downselects):
         '''
-        Test that our general_frequency_trend method returns the correct data
+        Test that our java_exploit method returns the correct data
         '''
         monkeypatch.setenv('TESTING', '')
 
@@ -169,7 +169,7 @@ class TestDownselects():
 
     def test_office_exploit(self, monkeypatch, downselects):
         '''
-        Test that our general_frequency_trend method returns the correct data
+        Test that our office_exploit method returns the correct data
         '''
         monkeypatch.setenv('TESTING', '')
 
@@ -222,7 +222,7 @@ class TestDownselects():
 
     def test_adobe_exploit(self, monkeypatch, downselects):
         '''
-        Test that our general_frequency_trend method returns the correct data
+        Test that our adobe_exploit method returns the correct data
         '''
         monkeypatch.setenv('TESTING', '')
 
@@ -275,7 +275,7 @@ class TestDownselects():
 
     def test_web_shell_exploit(self, monkeypatch, downselects):
         '''
-        Test that our general_frequency_trend method returns the correct data
+        Test that our web_shell_exploit method returns the correct data
         '''
         monkeypatch.setenv('TESTING', '')
 
@@ -325,4 +325,3 @@ class TestDownselects():
 |---:|:----------------------|:-------------------|:--------------|
 |  0 | IIS APPPOOL\EvilClerk | api.dropboxapi.com | w3wp.exe      |
 |  1 | EVIL\EvilUSER         | api.test2.com      | tomcat.exe    |'''
-
