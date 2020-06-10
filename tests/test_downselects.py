@@ -13,7 +13,7 @@ parent_dir = os.path.dirname(current_dir)
 sys.path.insert(0, parent_dir)
 
 from hunt_tools.downselects import Downselects
-import hunt_tools
+
 
 class TestDownselects():
 
