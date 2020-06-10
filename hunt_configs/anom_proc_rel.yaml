@@ -78,49 +78,6 @@ downselects:
   ref:
     - https://attack.mitre.org/techniques/T1193/
   func: d.office_exploit(['record_id', 'timestamp', 'host', 'sensor_id', 'user', 'event_id', 'process_name', 'process_args', 'parent_name'])
-- title: Scripting Exploitation from Office Apps
-  desc: |
-    Adversaries may use scripts to aid in operations and perform multiple actions that would otherwise be manual. Scripting is useful for speeding up operational tasks and reducing the time required to gain access to critical resources. Some scripting languages may be used to bypass process monitoring mechanisms by directly interacting with the operating system at an API level instead of calling other programs. Common scripting languages for Windows include VBScript and PowerShell but could also be in the form of command-line batch scripts.
-    Scripts can be embedded inside Office documents as macros that can be set to execute when files used in Spearphishing Attachment and other types of spearphishing are opened. Malicious embedded macros are an alternative means of execution than software exploitation through Exploitation for Client Execution, where adversaries will rely on macros being allowed or that the user will accept to activate them.
-    Many popular offensive frameworks exist which use forms of scripting for security testers and adversaries alike. MetaSploit, Veil Framework and PowerSploit are three examples that are popular among penetration testers for exploit and post-compromise operations and include many features for evading defenses. Some adversaries are known to use PowerShell.
-
-    **Filters Applied:**
-    - Parent process is winword.exe (MS Office)
-    - Parent process is excel.exe (MS Office)
-    - Parent process is powerpnt.exe  (MS Office)
-    - Process name is wscript.exe
-    - Process name is cscript.exe
-    - Process name is vbc.exe
-    - Process name is mshta.exe
-    - Process name is cmd.exe
-    - Process name is powershell.exe
-    - Process name is perl.exe
-    - Process name is python*
-    - Process name is jsc.exe
-  obsv:
-    - Watch for office products spawning scripting interpreters and executing arbitray commands.
-  ref:
-    - https://attack.mitre.org/techniques/T1064/
-  func: d.office_scripting_exploit(['record_id', 'timestamp', 'host', 'sensor_id', 'user', 'event_id', 'process_name', 'process_args', 'parent_name'])
-- title: Browser Activity from Office Apps
-  desc: |
-    Adversaries may use scripts to redirect the user to a web portal to enter credentials as part of the phishing campaign.
-    Scripts can be embedded inside Office documents as macros that can be set to execute when files used in Spearphishing Attachment and other types of spearphishing are opened. Malicious embedded macros are an alternative means of execution than software exploitation through Exploitation for Client Execution, where adversaries will rely on macros being allowed or that the user will accept to activate them.
-    Many popular offensive frameworks exist which use forms of scripting for security testers and adversaries alike. MetaSploit, Veil Framework and PowerSploit are three examples that are popular among penetration testers for exploit and post-compromise operations and include many features for evading defenses. Some adversaries are known to use PowerShell.
-
-    **Filters Applied:**
-    - Parent process is winword.exe (MS Office)
-    - Parent process is excel.exe (MS Office)
-    - Parent process is powerpnt.exe  (MS Office)
-    - Process name is iexplore.exe (Internet Explorer)
-    - Process name is chrome.exe (Chrome)
-    - Process name is firefox.exe (Firefox)
-  obsv:
-    - Watch for office products spawning browsers.
-    - Watch for netconns to suspicious or malicious domains or static IPs.
-  ref:
-    - https://attack.mitre.org/techniques/T1064/
-  func: d.browser_scripting_exploit(['record_id', 'timestamp', 'host', 'sensor_id', 'user', 'event_id', 'process_name', 'process_args', 'parent_name'])
 - title: Exploit detection - Adobe execution
   desc: |
     This attack technique is the same as the Office products above, but specific to Adobe as parent process.
@@ -132,26 +89,6 @@ downselects:
   ref:
     - https://attack.mitre.org/techniques/T1193/
   func: d.adobe_exploit(['record_id', 'timestamp', 'host', 'sensor_id', 'user', 'event_id', 'process_name', 'process_args', 'parent_name'])
-- title: Scripting Exploitation from Adobe
-  desc: |
-    This attack technique is the same as the Scripting Exploitation from Office Apps above, but specific to Adobe as parent process.
-
-    **Filters Applied:**
-    - Parent process is acrobat.exe or acrord32.exe (Adobe Acrobat)
-    - Process name is wscript.exe
-    - Process name is cscript.exe
-    - Process name is vbc.exe
-    - Process name is mshta.exe
-    - Process name is cmd.exe
-    - Process name is powershell.exe
-    - Process name is perl.exe
-    - Process name is python*
-    - Process name is jsc.exe
-  obsv:
-    - Watch for Adobe spawning scripting interpreters, browsers and/or other suspicious processes.
-  ref:
-    - https://attack.mitre.org/techniques/T1064/
-  func: d.adobe_scripting_exploit(['record_id', 'timestamp', 'host', 'sensor_id', 'user', 'event_id', 'process_name', 'process_args', 'parent_name'])
 - title: Web shell usage
   desc: |
     Review process args for the presence of sub-process execution especially if the sub-process is a command shell or scripting interpreter.
@@ -166,23 +103,6 @@ downselects:
   ref:
     - https://attack.mitre.org/techniques/T1100/
   func: d.web_shell_exploit(['record_id', 'timestamp', 'host', 'sensor_id', 'user', 'event_id', 'process_name', 'process_args', 'parent_name'])
-- title: "Executing commands through sql injection (ex: xp_cmdshell)"
-  desc: |
-    Look for a high concentration of uncommon symbol characters mixed into the arguments, such as "/**/", "/*!", "--", "SELECT * FROM members; DROP members--". Also look for items that look like command line path references, such as "SELECT CONCAT('0x',HEX('c:\\boot.ini'))", "SELECT LOAD_FILE(0x633A5C626F6F742E696E69)" or "../../../../../passwd".
-
-    **Filters Applied:**
-    - Parent process is sqlservr.exe (MS SQL)
-    - Parent process is mysqld.exe (MySQL)
-    - Parent process is postgres.exe (PostgreSQL)
-    - Parent process if mongod.exe (MongoDB)
-  obsv:
-    - Pay close attention to suspicious command line arguments.
-    - Watch for suspicious child process relationships.
-  ref:
-    - https://capec.mitre.org/data/definitions/66.html
-    - https://securityweekly.com/2013/01/18/mysql-file-system-enumeration/
-    - https://www.netsparker.com/blog/web-security/sql-injection-cheat-sheet/
-  func: d.office_scripting_exploit(['record_id', 'timestamp', 'host', 'sensor_id', 'user', 'event_id', 'process_name', 'process_args', 'parent_name'])
 - title: Frequency Counts
   desc: Displays count of occurance patterns.
   obsv:

@@ -39,6 +39,7 @@ pd.set_option('display.max_rows', 101)
 pd.set_option('display.max_columns', 60)
 pd.set_option('colheader_justify', 'left')
 display(HTML("<style>.container { width:85% !important; }</style>"))
+h.disable_scrolling()
 """,
             metadata={"init_cell": True, "tags": ["Imports"]}
         ))
@@ -120,7 +121,7 @@ qgrid.show_grid(df, grid_options={'forceFitColumns': False, 'defaultColumnWidth'
                 nb['cells'].append(nbf.v4.new_markdown_cell(f"""**Reference:**\n{references}"""))
 
             # Write in the downselect function
-            nb['cells'].append(nbf.v4.new_code_cell(f"""{i.get('func')}""", metadata={
+            nb['cells'].append(nbf.v4.new_code_cell(f"""display(qgrid({i.get('func')}))""", metadata={
                                "tags": ["InvestigativeActions", "Downselects"]}))
 
          # *** Write Notebook to file ***

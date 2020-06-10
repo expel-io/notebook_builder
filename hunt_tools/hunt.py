@@ -9,6 +9,15 @@ def run_all(ev):
     display(Javascript('IPython.notebook.execute_cell_range(IPython.notebook.get_selected_index()+1, IPython.notebook.ncells())'))
 
 
+def disable_scrolling():
+    js = '''
+    IPython.OutputArea.prototype._should_scroll = function(lines) {
+        return false;
+    }
+    '''
+    display(Javascript(js))
+
+
 class Hunt:
     """This class is responsible for processing raw hunt data for Jupyter threat hunting
     Args:
