@@ -121,7 +121,7 @@ qgrid.show_grid(df, grid_options={'forceFitColumns': False, 'defaultColumnWidth'
                 nb['cells'].append(nbf.v4.new_markdown_cell(f"""**Reference:**\n{references}"""))
 
             # Write in the downselect function
-            nb['cells'].append(nbf.v4.new_code_cell(f"""display(qgrid({i.get('func')}))""", metadata={
+            nb['cells'].append(nbf.v4.new_code_cell(f"""{i.get('func')}""", metadata={
                                "tags": ["InvestigativeActions", "Downselects"]}))
 
          # *** Write Notebook to file ***
