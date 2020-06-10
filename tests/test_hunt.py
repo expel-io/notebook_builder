@@ -12,7 +12,6 @@ parent_dir = os.path.dirname(current_dir)
 sys.path.insert(0, parent_dir)
 
 from hunt_tools.hunt import Hunt
-import hunt_tools
 
 
 test_data = [
