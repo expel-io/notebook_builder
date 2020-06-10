@@ -2,7 +2,6 @@ import inspect
 import os
 import sys
 from datetime import datetime
-from unittest.mock import MagicMock
 
 import mock
 import pandas as pd
@@ -12,8 +11,8 @@ current_dir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentfra
 parent_dir = os.path.dirname(current_dir)
 sys.path.insert(0, parent_dir)
 
-import hunt_tools
 from hunt_tools.hunt import Hunt
+import hunt_tools
 
 
 test_data = [

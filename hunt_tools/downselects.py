@@ -17,8 +17,8 @@ from ipywidgets import Layout
 
 
 def downselect(f):
-    """Decorator to display a downselect methods output. Can be configured for different object types.
-    This can also catch any downselect errors and can be configured to report to Sentry, Loggly and/or DataDog."""
+    """This is a decorator run before each downselect to catch any errors and display the downselect methods
+    output. This can be configured to log and/or report an error reporting tool like Sentry."""
 
     @functools.wraps(f)
     def wrap(self, *args, **kwargs):
@@ -39,7 +39,7 @@ def downselect(f):
                     return result
             except Exception as e:
                 display(Markdown(f'An error has been reported: <span style="color:red">{e}</span>'))
-                pass
+                pass  # Error reporting can be configured here!
     return wrap
 
 
