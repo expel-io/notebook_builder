@@ -1,7 +1,7 @@
 
 exclude: 'sample_data/.*'
 repos:
-- repo: git://github.com/pre-commit/pre-commit-hooks
+- repo: https://github.com/pre-commit/pre-commit-hooks
   rev: v2.2.3
   hooks:
     - id: check-added-large-files
@@ -28,7 +28,7 @@ repos:
       language_version: python3
     - id: trailing-whitespace
       language_version: python3
-- repo: git://github.com/asottile/reorder_python_imports
+- repo: https://github.com/asottile/reorder_python_imports
   rev: v1.4.0
   hooks:
     - id: reorder-python-imports
